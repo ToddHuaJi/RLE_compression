@@ -67,17 +67,34 @@ always @(posedge clk) begin
 	case(state)
 	INIT: begin
 		//Initialize registers
+		recv_ready <= 1 
+		rd_reg <= 0
+		wr_reg <= 0
+		bit_count <= 0
+		
+		shift_buf <= 0
+		new_bitstream <=0
+		
+		
 	end
 	REQUEST_INPUT: begin
 		//Assert rd_req signal to FIFO by setting rd_reg
 		//FIFO takes rd_req signal at next clock
+		shift_count <= 0
+		rd_reg <= 1
 	end
 	WAIT_INPUT: begin
 		//De-assert rd_req by setting rd_reg
+		rd_reg <= 0
 	end
 	READ_INPUT : begin
 		//FIFO provides valid data after taking rd_req
 		//shift_buf stores 8 bit input data
+		shift_buf <= in_data
+		
+		
+		
+		
 	end
 	COUNT_BITS: begin
 		//Count number of consecutive bits in shift_buf
