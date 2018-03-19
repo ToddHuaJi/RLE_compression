@@ -21,7 +21,9 @@ module rle_testbench;
 	// clock running forever
 	always
 	begin
-
+	clkt = 1;
+	#1 clkt = !clkt;
+	
 	// Clock signal assignment
 
 	end
@@ -29,7 +31,9 @@ module rle_testbench;
 	// reset for a few cycles
 	initial
 	begin
-
+	#5 rstt = 1; 
+	#5 rstt = 0;
+	end_of_streamt = 0;
 	// Reset signal assignment
 
 	end
@@ -37,17 +41,26 @@ module rle_testbench;
 	// test vector generator
 	initial
 	begin
+	
+	// test vector 1
+	in_datat = 8'b10000000;
+	recv_readyt = 1;
+	send_readyt = 1;
+	#5;
+	recv_readyt = 0;
+	#5;
+	recv_readyt = 1;
+	in_datat = 8'b11111111;
+	#5;
+	end_of_streamt = 1;
+	#5;
+	// test vector 2
 
-	  // test vector 1
-
-
-		// test vector 2
 
 
 
 
-
- 	  // test vector n
+ 	// test vector n
 
 
 		$stop;
