@@ -67,13 +67,11 @@ always @(posedge clk) begin
 	case(state)
 	INIT: begin
 		//Initialize registers
-		recv_ready <= 1 
 		rd_reg <= 0
 		wr_reg <= 0
 		bit_count <= 0
-		
 		shift_buf <= 0
-		new_bitstream <=0
+		new_bitstream <=1
 		
 		
 	end
@@ -101,14 +99,16 @@ always @(posedge clk) begin
 		//If new type of bit starts, store bit ID in value_type register
 		//If current value_type and shift_buf[0] is not matched, notify current encoding is completed and new encoding will be started
 		if(new_bitstream) begin
+		value_type <= shift_buf[0]
+		new_bitstream <= !new_bitstream
 
 		end
 		else begin
-			if(shift_buf[0] == value_type) begin
-
+			if(shift_buf[0] == value_type) begin// increment
+			bit_count <= bit_count +1
 			end
-			else begin
-
+			else begin//reset
+			value_type <= shift_buf[0]
 			end
 		end
 	end
@@ -116,18 +116,22 @@ always @(posedge clk) begin
 		//Right shift the shift_buf
 		//Increase shift_count
 		if(!new_bitstream) begin
-
+		shift_buf <= (shift_buf << 1)
+		shift_count <= shift_count + 1
 		end
 	end
 	COUNT_DONE: begin
 		//Assert wr_req by setting wr_reg
 		//FIFO will take wr_req signal in next clock cycle
+		wr_reg <= 1
 	end
 	WAIT_OUTPUT : begin
 		//De-assert wr_req by setting wr_reg
+		wr_reg <= 0
 	end
 	RESET_COUNT : begin
 		//Reset bit counting register after passing encoded data to output side FIFO
+		bit_count <= 0
 	end
 	endcase
 end
