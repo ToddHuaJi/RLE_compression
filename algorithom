@@ -1,0 +1,14 @@
+initial =1
+getdata =3
+if same bit = +2
+if different = +7
+
+cases:
+
+if only one segment need to calculate delays for recv_ready and end_of_stream
+  cases: 
+      last bit differs, +6 delay for end_of_stream and recv_read
+
+if two segment and bits different need to calculate delay for recv_ready and end_of_stream go with second segment(no delay)
+
+if two segment and bits same need to calculate delays for recv_ready and end_of_stream
