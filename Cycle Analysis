@@ -5,6 +5,9 @@ getdata =3
 if same bit = +2
 if different, then output and count next one = +7
 
+0000 0001, 500ps  #5
+
+
 cases:
 
 if only one segment need to calculate delays for recv_ready and end_of_stream
