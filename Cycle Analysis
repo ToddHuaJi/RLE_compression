@@ -5,14 +5,57 @@ getdata =3
 if same bit = +2
 if different, then output and count next one = +7
 
-0000 0001, 500ps  #5
-
-
 cases:
 
 if only one segment need to calculate delays for recv_ready and end_of_stream
-  cases: 
-      last bit differs, +6 delay for end_of_stream and recv_read
+code:
+	// test vector 1
+
+	in_datat = 8'b00000000;
+
+	recv_readyt = 1;
+
+	send_readyt = 1;
+	end_of_streamt =1;
+
+	#4;
+	recv_readyt = 0;
+	
+	1(init)+3(getdata)+2*7(bits count)+1(to shift)+1(to request) =20
+	20*20 = 400ps
+	total delay is #4
+	
+if one bit differs
+code:
+	// test vector 1
+
+	in_datat = 8'b00001000;
+
+	recv_readyt = 1;
+
+	send_readyt = 1;
+	end_of_streamt =1;
+
+	#6.4;
+	recv_readyt = 0;
+	1(init)+3(getdata)+2*3(bits count)+5(detect difference)+2*1(bits count)+5(detect diffrence)+2*4(bitscount)+1(to shift)+1(to request)=32
+	20*32 = 640ps
+	total delay is #6.4
+	
+if last bit differs
+code:
+	// test vector 1
+
+	in_datat = 8'b10000000;
+
+	recv_readyt = 1;
+
+	send_readyt = 1;
+	
+	end_of_streamt =1;
+
+	#10;
+	recv_readyt = 0;
 
 if two segment and bits different need to calculate delay for recv_ready and end_of_stream go with second segment(no delay)
 
