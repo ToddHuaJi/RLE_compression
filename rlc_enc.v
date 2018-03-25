@@ -101,14 +101,14 @@ always @(posedge clk) begin
 		if(new_bitstream) begin
 		value_type <= shift_buf[0];
 		new_bitstream <= !new_bitstream;
-
+		bit_count <= bit_count + 1;
 		end
 		else begin
 			if(shift_buf[0] == value_type) begin// increment
 			bit_count <= bit_count +1;
 			end
 			else begin//reset
-			value_type <= shift_buf[0];
+			new_bitstream <= 1;
 			end
 		end
 	end
@@ -116,7 +116,7 @@ always @(posedge clk) begin
 		//Right shift the shift_buf
 		//Increase shift_count
 		if(!new_bitstream) begin
-		shift_buf <= (shift_buf << 1);
+		shift_buf <= (shift_buf >> 1);
 		shift_count <= shift_count + 1;
 		end
 	end
@@ -128,6 +128,7 @@ always @(posedge clk) begin
 	WAIT_OUTPUT : begin
 		//De-assert wr_req by setting wr_reg
 		wr_reg <= 0;
+		
 	end
 	RESET_COUNT : begin
 		//Reset bit counting register after passing encoded data to output side FIFO
