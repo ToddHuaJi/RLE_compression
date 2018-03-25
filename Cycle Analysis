@@ -57,6 +57,21 @@ code:
 	#10;
 	recv_readyt = 0;
 
+if first bit differs, takes 500ps to complete
+code:
+	// test vector 1
+
+	in_datat = 8'b00000001;
+
+	recv_readyt = 1;
+
+	send_readyt = 1;
+	
+	end_of_streamt =1;
+
+	#10;
+	recv_readyt = 0;
+
 if two segment and bits different need to calculate delay for recv_ready and end_of_stream go with second segment(no delay)
 
 if two segment and bits same need to calculate delays for recv_ready and end_of_stream
