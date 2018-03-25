@@ -68,7 +68,7 @@ code:
 	send_readyt = 1;
 	
 	end_of_streamt =1;
-
+	1(INIT)+3(I/P) + 2(count) + 5(detect difference) + 7*2(count) = 25
 	#10;
 	recv_readyt = 0;
 
