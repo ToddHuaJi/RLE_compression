@@ -2,7 +2,7 @@ Cycles:
 initial =1
 getdata =3
 if same bit = +2
-if different = +7
+if different, then output and count next one = +7
 
 cases:
 
