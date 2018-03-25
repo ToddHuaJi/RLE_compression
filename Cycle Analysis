@@ -71,6 +71,22 @@ code:
 	1(INIT)+3(I/P) + 2(count) + 5(detect difference) + 7*2(count) = 25
 	#10;
 	recv_readyt = 0;
+	
+if flip and continue in the middle
+code:
+	// test vector 1
+
+	in_datat = 8'b00011000;
+
+	recv_readyt = 1;
+
+	send_readyt = 1;
+	
+	end_of_streamt =1;
+	1(INIT)+3(I/P) + 3*2(count) + 5(detect difference) + 2*2(count)+ 5(detect difference) +3*2(count)  = 30
+	
+	#10;
+	recv_readyt = 0;
 
 if two segment and bits different need to calculate delay for recv_ready and end_of_stream go with second segment(no delay)
 
